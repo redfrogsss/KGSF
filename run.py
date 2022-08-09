@@ -27,7 +27,7 @@ import numpy as np
 from tqdm import tqdm
 from math import exp
 import os
-os.environ['CUDA_VISIBLE_DEVICES']='3'
+os.environ['CUDA_VISIBLE_DEVICES']='0'
 import signal
 import json
 import argparse
@@ -682,7 +682,8 @@ if __name__ == '__main__':
     args=setup_args().parse_args()
     print(vars(args))
     if args.is_finetune==False:
-        loop=TrainLoop_fusion_rec(vars(args),is_finetune=False)
+        with torch.no_grad():
+            loop=TrainLoop_fusion_rec(vars(args),is_finetune=False)
         #loop.model.load_model()
         loop.train()
     else:
